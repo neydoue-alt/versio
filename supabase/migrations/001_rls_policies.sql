@@ -3,6 +3,30 @@
 -- Run this in the Supabase SQL editor (Dashboard → SQL Editor)
 -- ============================================================
 
+-- ─── Fix column types to uuid ───────────────────────────────
+-- auth.uid() returns uuid; id/user_id columns must also be uuid.
+-- These ALTER statements are safe if the tables are empty.
+-- If you have existing rows, drop and recreate the tables instead.
+
+ALTER TABLE profiles
+  ALTER COLUMN id SET DATA TYPE uuid USING id::text::uuid;
+
+ALTER TABLE struggles
+  ALTER COLUMN id      SET DATA TYPE uuid USING id::text::uuid,
+  ALTER COLUMN user_id SET DATA TYPE uuid USING user_id::text::uuid;
+
+ALTER TABLE goals
+  ALTER COLUMN id      SET DATA TYPE uuid USING id::text::uuid,
+  ALTER COLUMN user_id SET DATA TYPE uuid USING user_id::text::uuid;
+
+ALTER TABLE check_ins
+  ALTER COLUMN id      SET DATA TYPE uuid USING id::text::uuid,
+  ALTER COLUMN user_id SET DATA TYPE uuid USING user_id::text::uuid;
+
+ALTER TABLE streaks
+  ALTER COLUMN id      SET DATA TYPE uuid USING id::text::uuid,
+  ALTER COLUMN user_id SET DATA TYPE uuid USING user_id::text::uuid;
+
 -- ─── profiles ───────────────────────────────────────────────
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 
@@ -96,7 +120,6 @@ CREATE POLICY "Users can update own streaks"
   WITH CHECK (auth.uid() = user_id);
 
 -- ─── Auto-create profile on signup ──────────────────────────
--- Trigger that creates a profile row whenever a new user signs up
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER
 LANGUAGE plpgsql

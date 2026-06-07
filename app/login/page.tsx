@@ -24,60 +24,60 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-sm space-y-6">
-        <h1 className="text-3xl font-bold text-center">Sign in to Versio</h1>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            required
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-          />
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            required
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-          />
-          {error && <p className="text-red-600 text-sm">{error}</p>}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-black text-white rounded-lg py-2 font-medium hover:bg-gray-800 disabled:opacity-50"
-          >
-            {loading ? 'Signing in…' : 'Sign in'}
-          </button>
-        </form>
-
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t" />
+    <div style={{ background: '#000' }}>
+      <div className="scene" aria-hidden="true" />
+      <div className="m-halo" aria-hidden="true"><div className="l l1" /><div className="l l2" /><div className="l l3" /></div>
+      <div className="m-wrap">
+        <nav className="m-nav">
+          <div className="m-nav-pill"><Link href="/" className="m-brand"><span className="dot" />VERSIO</Link></div>
+          <Link href="/" className="m-back">← Back home</Link>
+        </nav>
+        <main className="m-main">
+          <div className="m-container" style={{ maxWidth: 480 }}>
+            <div className="m-kicker">WELCOME BACK</div>
+            <h1 className="font-display" style={{ fontSize: 'clamp(40px,5vw,64px)', lineHeight: 0.9, letterSpacing: '-0.03em', textTransform: 'uppercase', margin: '0 0 20px' }}>LOG IN.</h1>
+            <p style={{ color: 'rgba(255,255,255,0.65)', marginBottom: 36, lineHeight: 1.7 }}>Pick up exactly where you left off.</p>
+            <div className="m-glass" style={{ padding: 32 }}>
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <Field label="Email"><input name="email" type="email" placeholder="you@example.com" required style={inputStyle} /></Field>
+                <Field label="Password"><input name="password" type="password" placeholder="•••••••••" required style={inputStyle} /></Field>
+                {error && <p style={{ color: '#ff9bb3', fontSize: 13, margin: 0 }}>{error}</p>}
+                <button type="submit" disabled={loading} className="m-nt primary" style={{ marginTop: 14, justifyContent: 'center' }}>
+                  {loading ? 'Logging in…' : 'Log in →'}
+                </button>
+              </form>
+              <div className="or" style={orStyle}>or</div>
+              <button type="button" onClick={handleGoogle} className="m-nt" style={{ width: '100%', justifyContent: 'center' }}>
+                Continue with Google
+              </button>
+              <div style={{ textAlign: 'center', marginTop: 20, color: 'rgba(255,255,255,0.5)', fontSize: 13 }}>
+                No account yet? <Link href="/signup" style={{ color: '#fff', textDecoration: 'none', borderBottom: '1px solid rgba(255,255,255,0.3)' }}>Sign up free</Link>
+              </div>
+            </div>
           </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="bg-gray-50 px-2 text-gray-500">or</span>
-          </div>
-        </div>
-
-        <form action={handleGoogle}>
-          <button
-            type="submit"
-            className="w-full border rounded-lg py-2 font-medium hover:bg-gray-100 flex items-center justify-center gap-2"
-          >
-            Continue with Google
-          </button>
-        </form>
-
-        <p className="text-center text-sm text-gray-600">
-          Don&apos;t have an account?{' '}
-          <Link href="/signup" className="font-medium underline">
-            Sign up
-          </Link>
-        </p>
+        </main>
+        <footer className="m-footer">© 2026 VERSIO. ALL RIGHTS RESERVED.</footer>
       </div>
-    </main>
+    </div>
   )
+}
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <label style={{ fontSize: 11, letterSpacing: '0.20em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)' }}>{label}</label>
+      {children}
+    </div>
+  )
+}
+
+const inputStyle: React.CSSProperties = {
+  height: 48, padding: '0 18px', borderRadius: 999, border: 0,
+  background: 'rgba(255,255,255,0.06)', color: '#fff', font: 'inherit', outline: 'none',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), inset 0 0 0 1px rgba(255,255,255,0.08)',
+}
+
+const orStyle: React.CSSProperties = {
+  display: 'flex', alignItems: 'center', gap: 14, margin: '20px 0',
+  color: 'rgba(255,255,255,0.45)', fontSize: 11, letterSpacing: '0.30em', textTransform: 'uppercase',
 }
